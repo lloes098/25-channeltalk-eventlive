@@ -1,11 +1,11 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, Suspense } from 'react'
 import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
 import { getEventById } from '@/utils/events'
 
-export default function RegisterCompletePage() {
+function RegisterCompleteContent() {
   const searchParams = useSearchParams()
   const eventId = searchParams.get('event') || ''
   const event = eventId ? getEventById(eventId) : null
@@ -106,6 +106,25 @@ export default function RegisterCompletePage() {
         </div>
       </div>
     </main>
+  )
+}
+
+export default function RegisterCompletePage() {
+  return (
+    <Suspense fallback={
+      <main className="min-h-screen bg-[#17161C] py-12">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-2xl mx-auto">
+            <div className="bg-[#1F1E24] border border-[#2A2930] rounded-lg p-8 text-center">
+              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#C2FE0F] mx-auto"></div>
+              <p className="text-gray-400 mt-4">로딩 중...</p>
+            </div>
+          </div>
+        </div>
+      </main>
+    }>
+      <RegisterCompleteContent />
+    </Suspense>
   )
 }
 
