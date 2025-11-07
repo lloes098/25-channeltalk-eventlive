@@ -8,7 +8,7 @@ const performances: Record<number, any> = {
     name: '메인 무대 공연',
     category: '교내',
     stage: '메인 무대',
-    image: '/api/placeholder/800/400',
+    image: '/img/공연.jpg',
     startTime: '14:00',
     endTime: '15:00',
     performers: '학교 밴드',

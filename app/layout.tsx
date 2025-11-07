@@ -5,8 +5,8 @@ import ChannelTalk from '@/components/ChannelTalk'
 import KakaoMapScript from '@/components/KakaoMapScript'
 
 export const metadata: Metadata = {
-  title: 'EventLive',
-  description: 'EventLive - Live event management platform',
+  title: 'EVENTOK',
+  description: 'EVENTOK - Live event management platform',
 }
 
 export default function RootLayout({

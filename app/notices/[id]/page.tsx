@@ -16,7 +16,7 @@ const notices: Record<number, any> = {
 즐거운 축제가 되도록 여러분의 협조 부탁드립니다.`,
     date: '2024.05.19',
     isPinned: true,
-    image: '/api/placeholder/800/400',
+    image: null,
   },
 }
 
@@ -65,17 +65,6 @@ export default function NoticeDetailPage({
           </div>
 
           <h1 className="text-3xl font-bold text-white mb-6">{notice.title}</h1>
-
-          {notice.image && (
-            <div
-              className="w-full h-64 bg-[#2A2930] rounded-lg mb-6"
-              style={{
-                backgroundImage: `url(${notice.image})`,
-                backgroundSize: 'cover',
-                backgroundPosition: 'center',
-              }}
-            />
-          )}
 
           <div className="prose prose-invert max-w-none">
             <p className="text-gray-300 whitespace-pre-line leading-relaxed">

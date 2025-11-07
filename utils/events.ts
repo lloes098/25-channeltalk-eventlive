@@ -47,15 +47,15 @@ export const events: Event[] = [
     id: 'hackathon',
     name: '2025 HACKY TALKY',
     time: '11월 07일 - 11월 08일, 9:00 AM - 6:00 PM',
-    location: '채널톡 코퍼레이션',
+    location: 'GS타워',
     locationDetail: '서울특별시 강남구 논현로 508 GS타워 8층 (채널톡 오피스)',
     description: '개발자들의 축제! 24시간 동안 아이디어를 현실로 만들어보세요. 다양한 시상과 네트워킹 기회가 기다립니다.',
     poster: '/img/2025_hacky_talky.jpeg',
     going: 156,
     tags: ['# 해커톤', '# 개발', '# 창업', '# 네트워킹'],
     host: '해커톤 조직위원회',
-    lat: 37.5125,
-    lng: 127.0590,
+    lat: 37.5083,
+    lng: 127.0378,
   },
 ]
 

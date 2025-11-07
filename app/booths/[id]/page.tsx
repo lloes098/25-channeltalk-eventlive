@@ -11,7 +11,7 @@ const booths: Record<number, any> = {
     name: '맛있는 푸드트럭',
     category: '음식',
     type: '푸드트럭',
-    image: '/api/placeholder/800/400',
+    image: '/img/부스.jpg',
     description:
       '다양한 음식을 제공하는 푸드트럭입니다. 햄버거, 타코, 아이스크림 등 다양한 메뉴를 준비했습니다.',
     operatingHours: '10:00 - 22:00',

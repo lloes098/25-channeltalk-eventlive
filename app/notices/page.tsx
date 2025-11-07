@@ -8,7 +8,7 @@ const notices = [
     content: '축제 기간 중 안전하게 즐기실 수 있도록 다음 사항을 준수해 주세요.',
     date: '2024.05.19',
     isPinned: true,
-    image: '/api/placeholder/800/400',
+    image: null,
   },
   {
     id: 2,
@@ -88,7 +88,17 @@ export default function NoticesPage() {
                 href={`/notices/${notice.id}`}
                 className="block bg-[#1F1E24] border border-[#2A2930] rounded-lg p-6 hover:border-[#C2FE0F] transition-colors"
               >
-                <div className="flex items-center justify-between">
+                <div className="flex items-center gap-4">
+                  {notice.image && (
+                    <div
+                      className="w-24 h-24 bg-[#2A2930] rounded-lg flex-shrink-0"
+                      style={{
+                        backgroundImage: `url(${notice.image})`,
+                        backgroundSize: 'cover',
+                        backgroundPosition: 'center',
+                      }}
+                    />
+                  )}
                   <div className="flex-1">
                     <h3 className="text-lg font-semibold text-white mb-1">
                       {notice.title}
