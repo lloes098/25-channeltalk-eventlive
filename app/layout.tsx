@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import './globals.css'
 import Header from '@/components/Header'
 import ChannelTalk from '@/components/ChannelTalk'
+import KakaoMapScript from '@/components/KakaoMapScript'
 
 export const metadata: Metadata = {
   title: 'EventLive',
@@ -14,6 +15,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   const channelTalkKey = process.env.NEXT_PUBLIC_CHANNEL_TALK_KEY || ''
+  const kakaoMapKey = process.env.NEXT_PUBLIC_KAKAO_MAP_KEY || ''
 
   return (
     <html lang="ko">
@@ -23,6 +25,7 @@ export default function RootLayout({
         <Header />
         {children}
         {channelTalkKey && <ChannelTalk pluginKey={channelTalkKey} />}
+        {kakaoMapKey && <KakaoMapScript apiKey={kakaoMapKey} />}
       </body>
     </html>
   )
