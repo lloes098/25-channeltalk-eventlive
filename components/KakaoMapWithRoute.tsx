@@ -35,9 +35,15 @@ export default function KakaoMapWithRoute({
   const [startPoint, setStartPoint] = useState<{ lat: number; lng: number } | null>(null)
   const [endPoint, setEndPoint] = useState<{ lat: number; lng: number } | null>(null)
   const [routeMode, setRouteMode] = useState<'selecting' | 'start' | 'end' | 'routed'>('selecting')
+  const routeModeRef = useRef(routeMode)
   const [routeInfo, setRouteInfo] = useState<{ distance: string; duration: string } | null>(null)
   const polylinesRef = useRef<any[]>([])
   const routeMarkersRef = useRef<any[]>([])
+
+  // routeMode ref 업데이트
+  useEffect(() => {
+    routeModeRef.current = routeMode
+  }, [routeMode])
 
   useEffect(() => {
     if (!mapRef.current) return
@@ -135,19 +141,22 @@ export default function KakaoMapWithRoute({
         }
 
         // 지도 클릭 이벤트 - 출발지/도착지 선택
-        window.kakao.maps.event.addListener(map, 'click', function (mouseEvent: any) {
+        const clickHandler = function (mouseEvent: any) {
           const latlng = mouseEvent.latLng
           const clickedLat = latlng.getLat()
           const clickedLng = latlng.getLng()
 
-          if (routeMode === 'start') {
+          const currentMode = routeModeRef.current
+          if (currentMode === 'start') {
             setStartPoint({ lat: clickedLat, lng: clickedLng })
             setRouteMode('end')
-          } else if (routeMode === 'end') {
+          } else if (currentMode === 'end') {
             setEndPoint({ lat: clickedLat, lng: clickedLng })
             setRouteMode('routed')
           }
-        })
+        }
+        
+        window.kakao.maps.event.addListener(map, 'click', clickHandler)
 
         setIsLoaded(true)
         return true

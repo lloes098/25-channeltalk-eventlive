@@ -24,6 +24,7 @@ export interface Event {
   lng: number
   venueFacilities?: VenueFacility[] // 행사장 내부 시설 정보
   floorPlan?: string // 건물 약도 이미지 경로
+  festivalMap?: string // 축제 지도 이미지 경로
 }
 
 export const events: Event[] = [
@@ -40,6 +41,7 @@ export const events: Event[] = [
     host: '연세대학교 학생회',
     lat: 37.5640,
     lng: 126.9369,
+    festivalMap: '/img/대동제_지도.png', // 대동제 지도 이미지
   },
   {
     id: 'rock-festival',

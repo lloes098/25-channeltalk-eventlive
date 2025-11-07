@@ -6,6 +6,7 @@ import { useState } from 'react'
 import KakaoMap from '@/components/KakaoMap'
 import KakaoMapWithRoute from '@/components/KakaoMapWithRoute'
 import FloorPlan from '@/components/FloorPlan'
+import FestivalMap from '@/components/FestivalMap'
 import { getEventById } from '@/utils/events'
 
 export default function EventDetailPage() {
@@ -14,6 +15,7 @@ export default function EventDetailPage() {
   const event = getEventById(eventId)
   const [showRoute, setShowRoute] = useState(false)
   const [showFloorPlan, setShowFloorPlan] = useState(false)
+  const [showFestivalMap, setShowFestivalMap] = useState(false)
 
   if (!event) {
     return (
@@ -205,7 +207,19 @@ export default function EventDetailPage() {
                   <div className="text-sm text-gray-400 mt-1">{event.locationDetail}</div>
                 </div>
                 <div className="flex gap-2">
-                  {event.floorPlan && (
+                  {event.festivalMap && (
+                    <button
+                      onClick={() => {
+                        setShowFestivalMap(!showFestivalMap)
+                        setShowFloorPlan(false)
+                        setShowRoute(false)
+                      }}
+                      className="px-4 py-2 bg-[#2A2930] text-white text-sm font-semibold rounded-md hover:bg-[#3A3940] transition-colors"
+                    >
+                      {showFestivalMap ? '일반 지도' : '축제 지도'}
+                    </button>
+                  )}
+                  {event.floorPlan && !showFestivalMap && (
                     <button
                       onClick={() => {
                         setShowFloorPlan(!showFloorPlan)
@@ -216,7 +230,7 @@ export default function EventDetailPage() {
                       {showFloorPlan ? '지도 보기' : '건물 약도'}
                     </button>
                   )}
-                  {!showFloorPlan && (
+                  {!showFloorPlan && !showFestivalMap && (
                     <button
                       onClick={() => setShowRoute(!showRoute)}
                       className="px-4 py-2 bg-[#2A2930] text-white text-sm font-semibold rounded-md hover:bg-[#3A3940] transition-colors"
@@ -227,7 +241,12 @@ export default function EventDetailPage() {
                 </div>
               </div>
               <div className="w-full h-96 bg-[#2A2930] rounded-lg overflow-hidden relative">
-                {showFloorPlan ? (
+                {showFestivalMap && event.festivalMap ? (
+                  <FestivalMap
+                    imagePath={event.festivalMap}
+                    height="384px"
+                  />
+                ) : showFloorPlan ? (
                   <FloorPlan
                     facilities={event.venueFacilities}
                   />

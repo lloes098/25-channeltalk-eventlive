@@ -2,6 +2,7 @@
 
 import { useEffect, useState, Suspense } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { useSearchParams } from 'next/navigation'
 import { getEventById } from '@/utils/events'
 
@@ -62,10 +63,13 @@ function RegisterCompleteContent() {
               {qrCodeUrl ? (
                 <div className="flex flex-col items-center">
                   <div className="bg-white p-4 rounded-lg mb-4">
-                    <img
+                    <Image
                       src={qrCodeUrl}
                       alt="QR Code"
+                      width={256}
+                      height={256}
                       className="w-64 h-64"
+                      unoptimized
                     />
                   </div>
                   <p className="text-sm text-gray-400 mb-2">참가 번호</p>
