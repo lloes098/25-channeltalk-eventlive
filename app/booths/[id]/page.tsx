@@ -3,11 +3,6 @@
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 
-declare global {
-  interface Window {
-    ChannelIO?: any
-  }
-}
 
 // 임시 데이터
 const booths: Record<number, any> = {
@@ -36,7 +31,7 @@ export default function BoothDetailPage({ params }: { params: { id: string } }) 
 
   const handleInquiry = () => {
     if (typeof window !== 'undefined' && window.ChannelIO) {
-      window.ChannelIO('show')
+      window.ChannelIO('showMessenger')
     }
   }
 

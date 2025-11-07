@@ -5,98 +5,90 @@ import { useEffect } from 'react'
 declare global {
   interface Window {
     ChannelIO?: any
-    ChannelIOInitialized?: boolean
+    __channelScriptAppended?: boolean
+    __channelBooted?: boolean
   }
 }
 
-interface ChannelTalkProps {
-  pluginKey: string
-}
+type Props = { pluginKey: string }
 
-export default function ChannelTalk({ pluginKey }: ChannelTalkProps) {
+export default function ChannelTalk({ pluginKey }: Props) {
   useEffect(() => {
     if (typeof window === 'undefined') return
     if (!pluginKey) return
-    if (window.ChannelIOInitialized) return
 
     const w = window
 
-    // ChannelIO 초기화 함수 (공식 스크립트 방식)
-    const initChannelIO = () => {
-      if (w.ChannelIO) {
-        return w.console.error('ChannelIO script included twice.')
-      }
+    // 이미 부트되어 있으면 아무 것도 안 함
+    if (w.__channelBooted && typeof w.ChannelIO === 'function') {
+      return
+    }
 
-      // ChannelIO 함수 설정
-      const ch = function (args: any) {
-        ch.c(arguments)
-      } as any
-      ch.q = []
-      ch.c = function (args: any) {
-        ch.q.push(args)
-      }
-      w.ChannelIO = ch
+    const boot = () => {
+      if (w.__channelBooted) return
+      if (typeof w.ChannelIO !== 'function') return
 
-      // 플러그인 스크립트 로드 함수
-      const loadPlugin = () => {
-        if (w.ChannelIOInitialized) {
-          return
-        }
-        w.ChannelIOInitialized = true
-
-        const s = document.createElement('script')
-        s.type = 'text/javascript'
-        s.async = true
-        s.src = 'https://cdn.channel.io/plugin/ch-plugin-web.js'
-        const x = document.getElementsByTagName('script')[0]
-        if (x.parentNode) {
-          x.parentNode.insertBefore(s, x)
-        }
-
-        // 스크립트 로드 후 boot 실행
-        s.onload = () => {
-          if (w.ChannelIO) {
-            try {
-              w.ChannelIO('boot', {
-                pluginKey: pluginKey,
-                appearance: {
-                  position: 'right',
-                  xMargin: 20,
-                  yMargin: 20,
-                },
-              })
-              console.log('ChannelTalk initialized successfully')
-            } catch (error) {
-              console.error('ChannelTalk initialization error:', error)
-            }
+      try {
+        w.ChannelIO('boot', { pluginKey }, (error: any) => {
+          if (error) {
+            console.error('[ChannelTalk] boot error:', error)
+            return
           }
-        }
-      }
-
-      // DOM 로드 상태 확인
-      if (document.readyState === 'complete') {
-        loadPlugin()
-      } else {
-        w.addEventListener('DOMContentLoaded', loadPlugin)
-        w.addEventListener('load', loadPlugin)
+          w.__channelBooted = true
+          // 필요 시 버튼 보이기
+          try { w.ChannelIO('showChannelButton') } catch {}
+          console.log('[ChannelTalk] booted')
+        })
+      } catch (e) {
+        console.error('[ChannelTalk] boot threw:', e)
       }
     }
 
-    // ChannelIO 초기화 시작
-    initChannelIO()
+    // 스크립트가 이미 붙어 있고 실제 라이브러리 함수면 바로 부트
+    if (typeof w.ChannelIO === 'function') {
+      boot()
+      return
+    }
 
-    return () => {
-      if (w.ChannelIO && window.ChannelIOInitialized) {
-        try {
-          w.ChannelIO('shutdown')
-          window.ChannelIOInitialized = false
-        } catch (error) {
-          console.error('ChannelTalk shutdown error:', error)
-        }
+    // 아직 로드 전이면 로더 삽입 (한 번만)
+    if (!w.__channelScriptAppended) {
+      w.__channelScriptAppended = true
+
+      // 공식 권장 큐 스텁 (중복 호출 안전)
+      ;(function() {
+        const ch: any = function() { ch.c(arguments) }
+        ch.q = []
+        ch.c = function(args: any) { ch.q.push(args) }
+        w.ChannelIO = ch
+      })()
+
+      const s = document.createElement('script')
+      s.async = true
+      s.src = 'https://cdn.channel.io/plugin/ch-plugin-web.js'
+      s.onload = () => boot()
+      s.onerror = () => {
+        console.error('[ChannelTalk] script load failed')
+        w.__channelScriptAppended = false
       }
+      document.head.appendChild(s)
+    } else {
+      // 스크립트는 붙었지만 아직 로딩 중인 경우: 로딩 완료 후 부트를 한 번 더 시도
+      const retry = setInterval(() => {
+        if (typeof w.ChannelIO === 'function') {
+          clearInterval(retry)
+          boot()
+        }
+      }, 300)
+      // 10초 후 포기
+      setTimeout(() => clearInterval(retry), 10000)
+    }
+
+    // 전역 1회만 종료하도록: 이 컴포넌트가 전역에서 한 번만 쓰이는 전제라면 cleanup은 생략 가능
+    return () => {
+      // 개발 중 잦은 HMR로 리로드될 때 강제 종료를 원하면 주석 해제
+      // try { if (w.ChannelIO) { w.ChannelIO('shutdown'); w.__channelBooted = false } } catch {}
     }
   }, [pluginKey])
 
   return null
 }
-

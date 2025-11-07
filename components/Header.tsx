@@ -3,18 +3,13 @@
 import Link from 'next/link'
 import { useState } from 'react'
 
-declare global {
-  interface Window {
-    ChannelIO?: any
-  }
-}
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   const handleInquiry = () => {
     if (typeof window !== 'undefined' && window.ChannelIO) {
-      window.ChannelIO('show')
+      window.ChannelIO('showMessenger')
     }
   }
 
