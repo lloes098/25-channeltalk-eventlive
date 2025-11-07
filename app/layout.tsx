@@ -40,9 +40,9 @@ export const metadata: Metadata = {
     images: ['/img/2025_대동제_책자_내지-01.png'],
   },
   icons: {
-    icon: '/icon.svg',
-    shortcut: '/icon.svg',
-    apple: '/icon.svg',
+    icon: '/img/logo.jpeg',
+    shortcut: '/img/logo.jpeg',
+    apple: '/img/logo.jpeg',
   },
   manifest: '/manifest.json',
 }
