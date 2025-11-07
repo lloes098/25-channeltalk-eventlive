@@ -230,9 +230,9 @@ export default function Home() {
               href="/notices"
               className="group bg-[#1F1E24] border border-[#2A2930] rounded-lg p-6 hover:border-[#C2FE0F]/50 transition-all hover:bg-[#2A2930]"
             >
-              <div className="w-12 h-12 rounded-lg bg-blue-500/20 flex items-center justify-center mb-4 group-hover:bg-blue-500/30 transition-colors">
+              <div className="w-12 h-12 rounded-lg bg-[#2A2930] flex items-center justify-center mb-4 group-hover:bg-[#3A3940] transition-colors">
                 <svg
-                  className="w-6 h-6 text-blue-400"
+                  className="w-6 h-6 text-white"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -253,9 +253,9 @@ export default function Home() {
               href="/booths"
               className="group bg-[#1F1E24] border border-[#2A2930] rounded-lg p-6 hover:border-[#C2FE0F]/50 transition-all hover:bg-[#2A2930]"
             >
-              <div className="w-12 h-12 rounded-lg bg-[#C2FE0F]/20 flex items-center justify-center mb-4 group-hover:bg-[#C2FE0F]/30 transition-colors">
+              <div className="w-12 h-12 rounded-lg bg-[#2A2930] flex items-center justify-center mb-4 group-hover:bg-[#3A3940] transition-colors">
                 <svg
-                  className="w-6 h-6 text-[#C2FE0F]"
+                  className="w-6 h-6 text-white"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -276,9 +276,9 @@ export default function Home() {
               href="/performances"
               className="group bg-[#1F1E24] border border-[#2A2930] rounded-lg p-6 hover:border-[#C2FE0F]/50 transition-all hover:bg-[#2A2930]"
             >
-              <div className="w-12 h-12 rounded-lg bg-purple-500/20 flex items-center justify-center mb-4 group-hover:bg-purple-500/30 transition-colors">
+              <div className="w-12 h-12 rounded-lg bg-[#2A2930] flex items-center justify-center mb-4 group-hover:bg-[#3A3940] transition-colors">
                 <svg
-                  className="w-6 h-6 text-purple-400"
+                  className="w-6 h-6 text-white"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -299,9 +299,9 @@ export default function Home() {
               href="/facilities"
               className="group bg-[#1F1E24] border border-[#2A2930] rounded-lg p-6 hover:border-[#C2FE0F]/50 transition-all hover:bg-[#2A2930]"
             >
-              <div className="w-12 h-12 rounded-lg bg-orange-500/20 flex items-center justify-center mb-4 group-hover:bg-orange-500/30 transition-colors">
+              <div className="w-12 h-12 rounded-lg bg-[#2A2930] flex items-center justify-center mb-4 group-hover:bg-[#3A3940] transition-colors">
                 <svg
-                  className="w-6 h-6 text-orange-400"
+                  className="w-6 h-6 text-white"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
