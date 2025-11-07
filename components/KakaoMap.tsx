@@ -29,7 +29,6 @@ export default function KakaoMap({
 }: KakaoMapProps) {
   const mapRef = useRef<HTMLDivElement>(null)
   const [isLoaded, setIsLoaded] = useState(false)
-  const [error, setError] = useState<string | null>(null)
   const mapInstanceRef = useRef<any>(null)
 
   useEffect(() => {
@@ -89,11 +88,9 @@ export default function KakaoMap({
         }
 
         setIsLoaded(true)
-        setError(null)
         return true
       } catch (error: any) {
         console.error('카카오맵 초기화 오류:', error)
-        setError(`지도를 불러오는 중 오류가 발생했습니다: ${error.message || '알 수 없는 오류'}`)
         return false
       }
     }
@@ -133,11 +130,9 @@ export default function KakaoMap({
         }
       }, 200)
 
-      // 타임아웃 설정 (5초 후에도 로드되지 않으면 에러 표시)
+      // 타임아웃 설정 (5초 후에도 로드되지 않으면 에러 표시하지 않음)
       const timeout = setTimeout(() => {
-        if (!mapInstanceRef.current) {
-          setError('카카오맵 API 키가 설정되지 않았거나 스크립트 로드에 실패했습니다.')
-        }
+        // 에러 메시지 표시하지 않음
       }, 5000)
 
       return () => {
@@ -154,16 +149,6 @@ export default function KakaoMap({
       style={{ width: '100%', height }}
       className="rounded-lg relative"
     >
-      {error && (
-        <div className="absolute inset-0 flex items-center justify-center bg-[#2A2930] rounded-lg">
-          <div className="text-center p-4">
-            <p className="text-gray-400 mb-2">{error}</p>
-            <p className="text-xs text-gray-500">
-              카카오맵 API 키가 설정되어 있는지 확인해주세요.
-            </p>
-          </div>
-        </div>
-      )}
     </div>
   )
 }

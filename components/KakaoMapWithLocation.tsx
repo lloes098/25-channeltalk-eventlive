@@ -161,25 +161,6 @@ export default function KakaoMapWithLocation({
         markers={allMarkers}
         level={level}
       />
-      {locationError && (
-        <div className="absolute top-4 left-4 bg-yellow-500/90 text-[#17161C] px-4 py-2 rounded-md text-sm max-w-md z-10 shadow-lg">
-          <div className="mb-2 whitespace-pre-line">{locationError}</div>
-          <div className="flex gap-2">
-            <button
-              onClick={handleRetryLocation}
-              className="text-[#17161C] underline font-semibold hover:no-underline"
-            >
-              다시 시도
-            </button>
-            <button
-              onClick={() => setLocationError(null)}
-              className="text-[#17161C] underline font-semibold hover:no-underline"
-            >
-              닫기
-            </button>
-          </div>
-        </div>
-      )}
       {userLocation && !locationError && (
         <div className="absolute top-4 right-4 bg-[#C2FE0F] text-[#17161C] px-4 py-2 rounded-md text-sm font-semibold">
           📍 내 위치 표시됨
