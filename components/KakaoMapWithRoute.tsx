@@ -211,6 +211,53 @@ export default function KakaoMapWithRoute({
     polylinesRef.current = []
     routeMarkersRef.current = []
 
+    // 직선 거리 계산 함수
+    const calculateDistance = (lat1: number, lng1: number, lat2: number, lng2: number): number => {
+      const R = 6371 // 지구 반경 (km)
+      const dLat = ((lat2 - lat1) * Math.PI) / 180
+      const dLng = ((lng2 - lng1) * Math.PI) / 180
+      const a =
+        Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+        Math.cos((lat1 * Math.PI) / 180) *
+          Math.cos((lat2 * Math.PI) / 180) *
+          Math.sin(dLng / 2) *
+          Math.sin(dLng / 2)
+      const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
+      return R * c
+    }
+
+    // 직선 경로 그리기 함수
+    const drawStraightLine = () => {
+      if (!startPoint || !endPoint) return
+      
+      const path = [
+        new window.kakao.maps.LatLng(startPoint.lat, startPoint.lng),
+        new window.kakao.maps.LatLng(endPoint.lat, endPoint.lng),
+      ]
+      const polyline = new window.kakao.maps.Polyline({
+        path: path,
+        strokeWeight: 5,
+        strokeColor: '#C2FE0F',
+        strokeOpacity: 0.8,
+        strokeStyle: 'dashed',
+      })
+      polyline.setMap(map)
+      polylinesRef.current.push(polyline)
+
+      // 직선 거리 계산
+      const distance = calculateDistance(startPoint.lat, startPoint.lng, endPoint.lat, endPoint.lng)
+      setRouteInfo({
+        distance: `${distance.toFixed(1)}km`,
+        duration: '직선 거리',
+      })
+
+      // 경로가 보이도록 지도 범위 조정
+      const bounds = new window.kakao.maps.LatLngBounds()
+      bounds.extend(new window.kakao.maps.LatLng(startPoint.lat, startPoint.lng))
+      bounds.extend(new window.kakao.maps.LatLng(endPoint.lat, endPoint.lng))
+      map.setBounds(bounds)
+    }
+
     // 출발지 마커
     if (startPoint) {
       const startMarkerElement = document.createElement('div')
@@ -349,52 +396,7 @@ export default function KakaoMapWithRoute({
         drawStraightLine()
       }
     }
-
-    // 직선 경로 그리기 함수
-    const drawStraightLine = () => {
-      const path = [
-        new window.kakao.maps.LatLng(startPoint!.lat, startPoint!.lng),
-        new window.kakao.maps.LatLng(endPoint!.lat, endPoint!.lng),
-      ]
-      const polyline = new window.kakao.maps.Polyline({
-        path: path,
-        strokeWeight: 5,
-        strokeColor: '#C2FE0F',
-        strokeOpacity: 0.8,
-        strokeStyle: 'dashed',
-      })
-      polyline.setMap(map)
-      polylinesRef.current.push(polyline)
-
-      // 직선 거리 계산
-      const distance = calculateDistance(startPoint!.lat, startPoint!.lng, endPoint!.lat, endPoint!.lng)
-      setRouteInfo({
-        distance: `${distance.toFixed(1)}km`,
-        duration: '직선 거리',
-      })
-
-      // 경로가 보이도록 지도 범위 조정
-      const bounds = new window.kakao.maps.LatLngBounds()
-      bounds.extend(new window.kakao.maps.LatLng(startPoint!.lat, startPoint!.lng))
-      bounds.extend(new window.kakao.maps.LatLng(endPoint!.lat, endPoint!.lng))
-      map.setBounds(bounds)
-    }
   }, [startPoint, endPoint, routeMode])
-
-  // 직선 거리 계산 함수
-  const calculateDistance = (lat1: number, lng1: number, lat2: number, lng2: number): number => {
-    const R = 6371 // 지구 반경 (km)
-    const dLat = ((lat2 - lat1) * Math.PI) / 180
-    const dLng = ((lng2 - lng1) * Math.PI) / 180
-    const a =
-      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-      Math.cos((lat1 * Math.PI) / 180) *
-        Math.cos((lat2 * Math.PI) / 180) *
-        Math.sin(dLng / 2) *
-        Math.sin(dLng / 2)
-    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
-    return R * c
-  }
 
   const handleStartRoute = () => {
     setStartPoint(null)
