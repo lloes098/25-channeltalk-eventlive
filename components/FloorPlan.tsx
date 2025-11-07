@@ -72,7 +72,7 @@ export default function FloorPlan({ facilities = [] }: FloorPlanProps) {
   }
 
   // 경로 계산 (간단한 경로 찾기 알고리즘)
-  const calculateRoute = (start: { x: number; y: number }, end: { x: number; y: number }) => {
+  const calculateRoute = (start: { x: number; y: number; name?: string }, end: { x: number; y: number; name?: string }) => {
     const path: Array<{ x: number; y: number }> = [start]
 
     // 복도를 통한 경로 계산
