@@ -4,6 +4,7 @@ import Link from 'next/link'
 import KakaoMap from '@/components/KakaoMap'
 import KakaoMapWithLocation from '@/components/KakaoMapWithLocation'
 import { allLocations } from '@/utils/locations'
+import { events } from '@/utils/events'
 
 // 현재 날짜 가져오기
 const getCurrentDate = () => {
@@ -30,31 +31,67 @@ const getCurrentDate = () => {
   }
 }
 
-// 임시 데이터
-const eventInfo = {
-  name: '2025 캠퍼스 페스티벌',
-  time: '10:00 AM - 8:00 PM',
-  location: '대학 중앙광장 및 잔디밭',
-  locationDetail: 'Seoul',
-  description: '우리 대학의 가장 큰 축제! 다채로운 공연과 부스, 이벤트로 가득한 3일간의 즐거움',
-  poster: '/api/placeholder/800/1200',
-  going: 142,
-  tags: ['# 축제', '# 공연', '# 부스'],
-  host: '대학 축제 준비위원회',
-}
-
 export default function Home() {
   const currentDate = getCurrentDate()
+  
   return (
     <main className="min-h-screen bg-[#17161C]">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {/* 행사 선택 섹션 */}
+        <section className="mb-12">
+          <h2 className="text-3xl font-bold text-white mb-6">진행 중인 행사</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {events.map((event) => (
+              <Link
+                key={event.id}
+                href={`/events/${event.id}`}
+                className="group bg-[#1F1E24] border border-[#2A2930] rounded-lg overflow-hidden hover:border-[#C2FE0F] transition-all hover:bg-[#2A2930]"
+              >
+                <div
+                  className="w-full h-48 bg-[#2A2930]"
+                  style={{
+                    backgroundImage: `url(${event.poster})`,
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center',
+                  }}
+                />
+                <div className="p-6">
+                  <h3 className="text-xl font-bold text-white mb-2 group-hover:text-[#C2FE0F] transition-colors">
+                    {event.name}
+                  </h3>
+                  <p className="text-sm text-gray-400 mb-3 line-clamp-2">
+                    {event.description}
+                  </p>
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs text-gray-500">{event.time}</span>
+                    <span className="text-sm text-[#C2FE0F] font-semibold">
+                      {event.going}명 참가
+                    </span>
+                  </div>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </section>
+
+        {/* 구분선 */}
+        <div className="border-t border-[#2A2930] my-12"></div>
+
+        {/* 기존 Featured Event 섹션 (첫 번째 행사 표시) */}
+        {events[0] && (
+          <section>
+            <div className="mb-6">
+              <span className="text-xs text-gray-400 uppercase tracking-wide">
+                Featured Event
+              </span>
+            </div>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
           {/* 왼쪽: 포스터 이미지 */}
           <div className="order-2 lg:order-1">
             <div
               className="w-full aspect-[3/4] bg-[#2A2930] rounded-lg overflow-hidden"
               style={{
-                backgroundImage: `url(${eventInfo.poster})`,
+                backgroundImage: `url(${events[0].poster})`,
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
               }}
@@ -75,7 +112,7 @@ export default function Home() {
 
               {/* 이벤트 제목 */}
               <h1 className="text-3xl lg:text-4xl font-bold text-white mb-6">
-                {eventInfo.name}
+                {events[0].name}
               </h1>
 
               {/* 날짜 및 시간 정보 */}
@@ -90,7 +127,7 @@ export default function Home() {
                   </div>
                   <div className="flex-1">
                     <div className="text-white font-semibold">{currentDate.dayOfWeek}</div>
-                    <div className="text-white font-semibold mt-1">{eventInfo.time}</div>
+                    <div className="text-white font-semibold mt-1">{events[0].time}</div>
                   </div>
                 </div>
 
@@ -119,7 +156,7 @@ export default function Home() {
                   </div>
                   <div className="flex-1">
                     <div className="flex items-center gap-2">
-                      <div className="text-white font-semibold">{eventInfo.location}</div>
+                      <div className="text-white font-semibold">{events[0].location}</div>
                       <svg
                         className="w-4 h-4 text-gray-400"
                         fill="none"
@@ -134,20 +171,20 @@ export default function Home() {
                         />
                       </svg>
                     </div>
-                    <div className="text-gray-400 mt-1">{eventInfo.locationDetail}</div>
+                    <div className="text-gray-400 mt-1">{events[0].locationDetail}</div>
                   </div>
                 </div>
               </div>
 
               {/* 설명 */}
               <div className="mb-6 pb-6 border-b border-[#2A2930]">
-                <p className="text-gray-300 leading-relaxed">{eventInfo.description}</p>
+                <p className="text-gray-300 leading-relaxed">{events[0].description}</p>
               </div>
 
               {/* 참가자 수 */}
               <div className="mb-6 pb-6 border-b border-[#2A2930]">
                 <div className="text-sm text-gray-400 mb-3">
-                  {eventInfo.going} GOING
+                  {events[0].going} GOING
                 </div>
                 <div className="flex items-center gap-2">
                   {/* 프로필 아바타들 */}
@@ -162,7 +199,7 @@ export default function Home() {
                     ))}
                   </div>
                   <span className="text-sm text-gray-400 ml-2">
-                    and {eventInfo.going - 4} others
+                    and {events[0].going - 4} others
                   </span>
                 </div>
               </div>
@@ -172,10 +209,10 @@ export default function Home() {
                 <div className="text-sm text-gray-400 mb-2">HOSTED BY</div>
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 rounded-full bg-[#C2FE0F] flex items-center justify-center text-[#17161C] font-bold">
-                    축
+                    {events[0].host.charAt(0)}
                   </div>
                   <div>
-                    <div className="text-white font-semibold">{eventInfo.host}</div>
+                    <div className="text-white font-semibold">{events[0].host}</div>
                   </div>
                 </div>
               </div>
@@ -183,7 +220,7 @@ export default function Home() {
               {/* 태그 */}
               <div className="mb-6">
                 <div className="flex flex-wrap gap-2">
-                  {eventInfo.tags.map((tag, index) => (
+                  {events[0].tags.map((tag, index) => (
                     <span
                       key={index}
                       className="px-3 py-1 bg-[#2A2930] text-gray-300 text-sm rounded-full"
@@ -197,13 +234,20 @@ export default function Home() {
               {/* 액션 버튼 */}
               <div className="space-y-3">
                 <Link
-                  href="/register/complete"
+                  href={`/register/complete?event=${events[0].id}`}
                   className="block w-full px-6 py-3 bg-white text-[#17161C] font-semibold rounded-md hover:bg-gray-100 transition-colors text-center"
                 >
                   참가 신청하기
                 </Link>
                 <div className="flex gap-4 text-sm">
-                  <button className="text-gray-400 hover:text-white transition-colors">
+                  <button
+                    onClick={() => {
+                      if (typeof window !== 'undefined' && window.ChannelIO) {
+                        window.ChannelIO('showMessenger')
+                      }
+                    }}
+                    className="text-gray-400 hover:text-white transition-colors"
+                  >
                     호스트에게 문의
                   </button>
                   <button className="text-gray-400 hover:text-white transition-colors">
@@ -216,12 +260,12 @@ export default function Home() {
             {/* 지도 섹션 */}
             <div className="mt-6 bg-[#1F1E24] border border-[#2A2930] rounded-lg p-6">
               <div className="text-sm text-gray-400 mb-3">LOCATION</div>
-              <div className="text-white font-semibold mb-2">{eventInfo.location}</div>
-              <div className="text-sm text-gray-400 mb-4">{eventInfo.locationDetail}</div>
+              <div className="text-white font-semibold mb-2">{events[0].location}</div>
+              <div className="text-sm text-gray-400 mb-4">{events[0].locationDetail}</div>
               <div className="w-full h-64 bg-[#2A2930] rounded-lg overflow-hidden">
                 <KakaoMap
-                  lat={37.5665}
-                  lng={126.9780}
+                  lat={events[0].lat}
+                  lng={events[0].lng}
                   height="256px"
                   level={3}
                 />
@@ -229,6 +273,8 @@ export default function Home() {
             </div>
           </div>
         </div>
+        </section>
+        )}
 
         {/* 빠른 메뉴 섹션 */}
         <section className="mt-12 lg:mt-16">
@@ -299,7 +345,7 @@ export default function Home() {
                   />
                 </svg>
               </div>
-              <h3 className="text-lg font-semibold text-white mb-1">공연 일정</h3>
+              <h3 className="text-lg font-semibold text-white mb-1">행사 일정</h3>
               <p className="text-sm text-gray-400">타임테이블 확인</p>
             </Link>
 

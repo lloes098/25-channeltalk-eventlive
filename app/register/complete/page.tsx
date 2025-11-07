@@ -2,10 +2,14 @@
 
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
+import { useSearchParams } from 'next/navigation'
+import { getEventById } from '@/utils/events'
 
 export default function RegisterCompletePage() {
-  const router = useRouter()
+  const searchParams = useSearchParams()
+  const eventId = searchParams.get('event') || ''
+  const event = eventId ? getEventById(eventId) : null
+  
   const [registrationId, setRegistrationId] = useState<string>('')
   const [qrCodeUrl, setQrCodeUrl] = useState<string>('')
 
@@ -14,11 +18,13 @@ export default function RegisterCompletePage() {
     const id = `REG-${Date.now()}-${Math.random().toString(36).substr(2, 9).toUpperCase()}`
     setRegistrationId(id)
 
-    // QR 코드 URL 생성 (랜덤 데이터)
-    const qrData = `${id}-${Math.random().toString(36).substr(2, 16)}`
+    // QR 코드 URL 생성 (행사 ID + 랜덤 데이터)
+    const qrData = eventId 
+      ? `${eventId}-${id}-${Math.random().toString(36).substr(2, 16)}`
+      : `${id}-${Math.random().toString(36).substr(2, 16)}`
     const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(qrData)}`
     setQrCodeUrl(qrUrl)
-  }, [])
+  }, [eventId])
 
   return (
     <main className="min-h-screen bg-[#17161C] py-12">
@@ -42,6 +48,9 @@ export default function RegisterCompletePage() {
               </svg>
             </div>
             <h1 className="text-3xl font-bold text-white mb-2">참가 신청되었습니다!</h1>
+            {event && (
+              <p className="text-lg text-[#C2FE0F] mb-2">{event.name}</p>
+            )}
             <p className="text-gray-400">현장 인증을 위해 아래 QR 코드를 보여주세요</p>
           </div>
 
