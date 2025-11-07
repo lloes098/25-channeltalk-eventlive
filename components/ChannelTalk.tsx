@@ -2,14 +2,6 @@
 
 import { useEffect } from 'react'
 
-declare global {
-  interface Window {
-    ChannelIO?: any
-    __channelScriptAppended?: boolean
-    __channelBooted?: boolean
-  }
-}
-
 type Props = { pluginKey: string }
 
 export default function ChannelTalk({ pluginKey }: Props) {
@@ -36,7 +28,11 @@ export default function ChannelTalk({ pluginKey }: Props) {
           }
           w.__channelBooted = true
           // 필요 시 버튼 보이기
-          try { w.ChannelIO('showChannelButton') } catch {}
+          try { 
+            if (w.ChannelIO && typeof w.ChannelIO === 'function') {
+              w.ChannelIO('showChannelButton')
+            }
+          } catch {}
           console.log('[ChannelTalk] booted')
         })
       } catch (e) {

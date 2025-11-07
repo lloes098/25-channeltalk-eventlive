@@ -2,6 +2,8 @@ declare global {
   interface Window {
     ChannelIO?: IChannelIO
     ChannelIOInitialized?: boolean
+    __channelScriptAppended?: boolean
+    __channelBooted?: boolean
   }
 }
 
