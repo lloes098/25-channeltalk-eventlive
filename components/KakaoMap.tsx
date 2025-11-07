@@ -10,6 +10,8 @@ interface KakaoMapProps {
     lat: number
     lng: number
     title?: string
+    type?: 'restroom' | 'exit' | 'elevator' | 'stairs' | 'smoking' | 'cafe' | 'other'
+    description?: string
   }>
   level?: number
 }
@@ -63,18 +65,69 @@ export default function KakaoMap({
         if (markers.length > 0) {
           markers.forEach((marker) => {
             const markerPosition = new window.kakao.maps.LatLng(marker.lat, marker.lng)
-            const kakaoMarker = new window.kakao.maps.Marker({
-              position: markerPosition,
-            })
-            kakaoMarker.setMap(map)
+            
+            // 시설 타입별 아이콘 및 색상 설정
+            const getMarkerInfo = (type?: string) => {
+              switch (type) {
+                case 'restroom':
+                  return { emoji: '🚻', color: '#4A90E2' }
+                case 'exit':
+                  return { emoji: '🚪', color: '#E74C3C' }
+                case 'elevator':
+                  return { emoji: '🛗', color: '#9B59B6' }
+                case 'stairs':
+                  return { emoji: '🪜', color: '#F39C12' }
+                case 'cafe':
+                  return { emoji: '☕', color: '#27AE60' }
+                default:
+                  return { emoji: '📍', color: '#95A5A6' }
+              }
+            }
 
-            // 마커에 제목이 있으면 인포윈도우 추가
+            const markerInfo = getMarkerInfo(marker.type)
+            
+            // DOM 요소 생성
+            const markerElement = document.createElement('div')
+            markerElement.style.cssText = `
+              width: 36px;
+              height: 36px;
+              border-radius: 50%;
+              background-color: ${markerInfo.color};
+              border: 3px solid white;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              font-size: 20px;
+              box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+              cursor: pointer;
+            `
+            markerElement.textContent = markerInfo.emoji
+            
+            // 커스텀 오버레이로 HTML 마커 생성
+            const customOverlay = new window.kakao.maps.CustomOverlay({
+              position: markerPosition,
+              content: markerElement,
+              yAnchor: 0.5,
+              xAnchor: 0.5,
+            })
+            
+            customOverlay.setMap(map)
+
+            // 클릭 시 인포윈도우 표시
             if (marker.title) {
+              const content = `
+                <div style="padding:8px;font-size:13px;min-width:120px;">
+                  <div style="font-weight:bold;margin-bottom:4px;">${marker.title}</div>
+                  ${marker.description ? `<div style="font-size:11px;color:#666;">${marker.description}</div>` : ''}
+                </div>
+              `
               const infowindow = new window.kakao.maps.InfoWindow({
-                content: `<div style="padding:5px;font-size:12px;">${marker.title}</div>`,
+                content: content,
               })
-              window.kakao.maps.event.addListener(kakaoMarker, 'click', function () {
-                infowindow.open(map, kakaoMarker)
+              
+              // 커스텀 오버레이 클릭 이벤트
+              markerElement.addEventListener('click', function () {
+                infowindow.open(map, markerPosition)
               })
             }
           })

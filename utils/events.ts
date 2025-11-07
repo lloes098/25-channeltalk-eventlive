@@ -1,3 +1,13 @@
+// 행사장 내부 시설 정보
+export interface VenueFacility {
+  id: string
+  name: string
+  type: 'restroom' | 'exit' | 'elevator' | 'stairs' | 'smoking' | 'cafe' | 'other'
+  lat: number
+  lng: number
+  description?: string
+}
+
 // 행사 데이터
 export interface Event {
   id: string
@@ -12,6 +22,7 @@ export interface Event {
   host: string
   lat: number
   lng: number
+  venueFacilities?: VenueFacility[] // 행사장 내부 시설 정보
 }
 
 export const events: Event[] = [
@@ -56,6 +67,64 @@ export const events: Event[] = [
     host: '해커톤 조직위원회',
     lat: 37.5083,
     lng: 127.0378,
+    venueFacilities: [
+      {
+        id: 'restroom-1',
+        name: '화장실 (남)',
+        type: 'restroom',
+        lat: 37.5084,
+        lng: 127.0379,
+        description: '남자 화장실',
+      },
+      {
+        id: 'restroom-2',
+        name: '화장실 (여)',
+        type: 'restroom',
+        lat: 37.5085,
+        lng: 127.0379,
+        description: '여자 화장실',
+      },
+      {
+        id: 'exit-1',
+        name: '메인 출구',
+        type: 'exit',
+        lat: 37.5082,
+        lng: 127.0377,
+        description: '행사장 메인 출입구',
+      },
+      {
+        id: 'exit-2',
+        name: '비상 출구',
+        type: 'exit',
+        lat: 37.5086,
+        lng: 127.0377,
+        description: '비상 출구',
+      },
+      {
+        id: 'elevator-1',
+        name: '엘리베이터',
+        type: 'elevator',
+        lat: 37.5083,
+        lng: 127.0376,
+        description: '엘리베이터',
+      },
+      {
+        id: 'stairs-1',
+        name: '계단',
+        type: 'stairs',
+        lat: 37.5084,
+        lng: 127.0376,
+        description: '비상 계단',
+      },
+      {
+        id: 'cafe-1',
+        name: '카페테리아',
+        type: 'cafe',
+        lat: 37.5083,
+        lng: 127.0380,
+        description: '간식 및 음료 제공',
+      },
+    ],
   },
 ]
 

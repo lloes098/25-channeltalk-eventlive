@@ -2,13 +2,16 @@
 
 import Link from 'next/link'
 import { useParams } from 'next/navigation'
+import { useState } from 'react'
 import KakaoMap from '@/components/KakaoMap'
+import KakaoMapWithRoute from '@/components/KakaoMapWithRoute'
 import { getEventById } from '@/utils/events'
 
 export default function EventDetailPage() {
   const params = useParams()
   const eventId = params.id as string
   const event = getEventById(eventId)
+  const [showRoute, setShowRoute] = useState(false)
 
   if (!event) {
     return (
@@ -193,17 +196,82 @@ export default function EventDetailPage() {
 
             {/* 지도 섹션 */}
             <div className="mt-6 bg-[#1F1E24] border border-[#2A2930] rounded-lg p-6">
-              <div className="text-sm text-gray-400 mb-3">LOCATION</div>
-              <div className="text-white font-semibold mb-2">{event.location}</div>
-              <div className="text-sm text-gray-400 mb-4">{event.locationDetail}</div>
-              <div className="w-full h-64 bg-[#2A2930] rounded-lg overflow-hidden">
-                <KakaoMap
-                  lat={event.lat}
-                  lng={event.lng}
-                  height="256px"
-                  level={3}
-                />
+              <div className="flex items-center justify-between mb-3">
+                <div>
+                  <div className="text-sm text-gray-400">LOCATION</div>
+                  <div className="text-white font-semibold mt-1">{event.location}</div>
+                  <div className="text-sm text-gray-400 mt-1">{event.locationDetail}</div>
+                </div>
+                <button
+                  onClick={() => setShowRoute(!showRoute)}
+                  className="px-4 py-2 bg-[#2A2930] text-white text-sm font-semibold rounded-md hover:bg-[#3A3940] transition-colors"
+                >
+                  {showRoute ? '일반 지도' : '길찾기'}
+                </button>
               </div>
+              <div className="w-full h-96 bg-[#2A2930] rounded-lg overflow-hidden">
+                {showRoute ? (
+                  <KakaoMapWithRoute
+                    lat={event.lat}
+                    lng={event.lng}
+                    height="384px"
+                    level={3}
+                    markers={
+                      event.venueFacilities
+                        ? event.venueFacilities.map((facility) => ({
+                            lat: facility.lat,
+                            lng: facility.lng,
+                            title: facility.name,
+                            type: facility.type,
+                            description: facility.description,
+                          }))
+                        : []
+                    }
+                  />
+                ) : (
+                  <KakaoMap
+                    lat={event.lat}
+                    lng={event.lng}
+                    height="384px"
+                    level={3}
+                    markers={
+                      event.venueFacilities
+                        ? event.venueFacilities.map((facility) => ({
+                            lat: facility.lat,
+                            lng: facility.lng,
+                            title: facility.name,
+                            type: facility.type,
+                            description: facility.description,
+                          }))
+                        : []
+                    }
+                  />
+                )}
+              </div>
+              {/* 행사장 내부 시설 목록 */}
+              {event.venueFacilities && event.venueFacilities.length > 0 && (
+                <div className="mt-4">
+                  <div className="text-sm text-gray-400 mb-3">행사장 내부 시설</div>
+                  <div className="grid grid-cols-2 gap-2">
+                    {event.venueFacilities.map((facility) => (
+                      <div
+                        key={facility.id}
+                        className="flex items-center gap-2 text-sm text-gray-300"
+                      >
+                        <span className="text-lg">
+                          {facility.type === 'restroom' && '🚻'}
+                          {facility.type === 'exit' && '🚪'}
+                          {facility.type === 'elevator' && '🛗'}
+                          {facility.type === 'stairs' && '🪜'}
+                          {facility.type === 'cafe' && '☕'}
+                          {!['restroom', 'exit', 'elevator', 'stairs', 'cafe'].includes(facility.type) && '📍'}
+                        </span>
+                        <span>{facility.name}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>
