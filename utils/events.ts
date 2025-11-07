@@ -23,6 +23,7 @@ export interface Event {
   lat: number
   lng: number
   venueFacilities?: VenueFacility[] // 행사장 내부 시설 정보
+  floorPlan?: string // 건물 약도 이미지 경로
 }
 
 export const events: Event[] = [
@@ -67,7 +68,56 @@ export const events: Event[] = [
     host: '해커톤 조직위원회',
     lat: 37.5083,
     lng: 127.0378,
+    floorPlan: 'true', // 건물 약도 사용 여부
     venueFacilities: [
+      {
+        id: 'office-a',
+        name: '사무실 A',
+        type: 'other',
+        lat: 37.5082,
+        lng: 127.0375,
+        description: '사무실 구역 A',
+      },
+      {
+        id: 'office-b',
+        name: '사무실 B',
+        type: 'other',
+        lat: 37.5084,
+        lng: 127.0375,
+        description: '사무실 구역 B',
+      },
+      {
+        id: 'meeting-room',
+        name: '회의실',
+        type: 'other',
+        lat: 37.5083,
+        lng: 127.0376,
+        description: '회의실',
+      },
+      {
+        id: 'seminar-room',
+        name: '세미나실',
+        type: 'other',
+        lat: 37.5083,
+        lng: 127.0377,
+        description: '세미나실',
+      },
+      {
+        id: 'pantry',
+        name: '탕비실',
+        type: 'other',
+        lat: 37.5082,
+        lng: 127.0378,
+        description: '탕비실',
+      },
+      {
+        id: 'venue',
+        name: '행사장',
+        type: 'other',
+        lat: 37.5086,
+        lng: 127.0378,
+        description: '메인 행사장',
+      },
       {
         id: 'restroom-1',
         name: '화장실 (남)',

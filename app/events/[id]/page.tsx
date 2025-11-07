@@ -5,6 +5,7 @@ import { useParams } from 'next/navigation'
 import { useState } from 'react'
 import KakaoMap from '@/components/KakaoMap'
 import KakaoMapWithRoute from '@/components/KakaoMapWithRoute'
+import FloorPlan from '@/components/FloorPlan'
 import { getEventById } from '@/utils/events'
 
 export default function EventDetailPage() {
@@ -12,6 +13,7 @@ export default function EventDetailPage() {
   const eventId = params.id as string
   const event = getEventById(eventId)
   const [showRoute, setShowRoute] = useState(false)
+  const [showFloorPlan, setShowFloorPlan] = useState(false)
 
   if (!event) {
     return (
@@ -194,7 +196,7 @@ export default function EventDetailPage() {
               </div>
             </div>
 
-            {/* 지도 섹션 */}
+            {/* 지도/약도 섹션 */}
             <div className="mt-6 bg-[#1F1E24] border border-[#2A2930] rounded-lg p-6">
               <div className="flex items-center justify-between mb-3">
                 <div>
@@ -202,15 +204,34 @@ export default function EventDetailPage() {
                   <div className="text-white font-semibold mt-1">{event.location}</div>
                   <div className="text-sm text-gray-400 mt-1">{event.locationDetail}</div>
                 </div>
-                <button
-                  onClick={() => setShowRoute(!showRoute)}
-                  className="px-4 py-2 bg-[#2A2930] text-white text-sm font-semibold rounded-md hover:bg-[#3A3940] transition-colors"
-                >
-                  {showRoute ? '일반 지도' : '길찾기'}
-                </button>
+                <div className="flex gap-2">
+                  {event.floorPlan && (
+                    <button
+                      onClick={() => {
+                        setShowFloorPlan(!showFloorPlan)
+                        setShowRoute(false)
+                      }}
+                      className="px-4 py-2 bg-[#2A2930] text-white text-sm font-semibold rounded-md hover:bg-[#3A3940] transition-colors"
+                    >
+                      {showFloorPlan ? '지도 보기' : '건물 약도'}
+                    </button>
+                  )}
+                  {!showFloorPlan && (
+                    <button
+                      onClick={() => setShowRoute(!showRoute)}
+                      className="px-4 py-2 bg-[#2A2930] text-white text-sm font-semibold rounded-md hover:bg-[#3A3940] transition-colors"
+                    >
+                      {showRoute ? '일반 지도' : '길찾기'}
+                    </button>
+                  )}
+                </div>
               </div>
-              <div className="w-full h-96 bg-[#2A2930] rounded-lg overflow-hidden">
-                {showRoute ? (
+              <div className="w-full h-96 bg-[#2A2930] rounded-lg overflow-hidden relative">
+                {showFloorPlan ? (
+                  <FloorPlan
+                    facilities={event.venueFacilities}
+                  />
+                ) : showRoute ? (
                   <KakaoMapWithRoute
                     lat={event.lat}
                     lng={event.lng}
@@ -253,22 +274,41 @@ export default function EventDetailPage() {
                 <div className="mt-4">
                   <div className="text-sm text-gray-400 mb-3">행사장 내부 시설</div>
                   <div className="grid grid-cols-2 gap-2">
-                    {event.venueFacilities.map((facility) => (
-                      <div
-                        key={facility.id}
-                        className="flex items-center gap-2 text-sm text-gray-300"
-                      >
-                        <span className="text-lg">
-                          {facility.type === 'restroom' && '🚻'}
-                          {facility.type === 'exit' && '🚪'}
-                          {facility.type === 'elevator' && '🛗'}
-                          {facility.type === 'stairs' && '🪜'}
-                          {facility.type === 'cafe' && '☕'}
-                          {!['restroom', 'exit', 'elevator', 'stairs', 'cafe'].includes(facility.type) && '📍'}
-                        </span>
-                        <span>{facility.name}</span>
-                      </div>
-                    ))}
+                    {event.venueFacilities.map((facility) => {
+                      // 시설 타입별 아이콘 결정
+                      let icon = '📍'
+                      if (facility.type === 'restroom') {
+                        icon = '🚻'
+                      } else if (facility.type === 'exit') {
+                        icon = '🚪'
+                      } else if (facility.type === 'elevator') {
+                        icon = '🛗'
+                      } else if (facility.type === 'stairs') {
+                        icon = '🪜'
+                      } else if (facility.type === 'cafe') {
+                        icon = '☕'
+                      } else if (facility.id.includes('office')) {
+                        icon = '🏢'
+                      } else if (facility.id.includes('meeting')) {
+                        icon = '💼'
+                      } else if (facility.id.includes('seminar')) {
+                        icon = '📚'
+                      } else if (facility.id.includes('pantry')) {
+                        icon = '🍽️'
+                      } else if (facility.id.includes('venue')) {
+                        icon = '🎪'
+                      }
+                      
+                      return (
+                        <div
+                          key={facility.id}
+                          className="flex items-center gap-2 text-sm text-gray-300"
+                        >
+                          <span className="text-lg">{icon}</span>
+                          <span>{facility.name}</span>
+                        </div>
+                      )
+                    })}
                   </div>
                 </div>
               )}
