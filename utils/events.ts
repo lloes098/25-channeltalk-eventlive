@@ -28,35 +28,7 @@ export interface Event {
 }
 
 export const events: Event[] = [
-  {
-    id: 'yonsei-festival',
-    name: '연세대학교 대동제',
-    time: '5월 27일 - 5월 30일, 10:00 AM - 10:00 PM',
-    location: '연세대학교 신촌캠퍼스',
-    locationDetail: '서울특별시 서대문구 연세로 50',
-    description: '연세대학교의 전통 있는 대동제! 다양한 공연, 부스, 체험 프로그램이 준비되어 있습니다.',
-    poster: '/img/2025_대동제_책자_내지-01.png',
-    going: 342,
-    tags: ['# 대동제', '# 공연', '# 부스', '# 체험'],
-    host: '연세대학교 학생회',
-    lat: 37.5640,
-    lng: 126.9369,
-    festivalMap: '/img/대동제_지도.png', // 대동제 지도 이미지
-  },
-  {
-    id: 'rock-festival',
-    name: '2025 락페스티벌',
-    time: '7월 4일 - 7월 26일, 2:00 PM - 11:00 PM',
-    location: '국립극장 달오름, 하늘',
-    locationDetail: '서울특별시 중구 장충단로 59',
-    description: '국내 최고의 락 페스티벌! 최고의 밴드들과 함께하는 뜨거운 여름밤을 경험하세요.',
-    poster: '/img/2025_락페스티벌.jpg',
-    going: 1250,
-    tags: ['# 락페스티벌', '# 음악', '# 공연', '# 야외'],
-    host: '락페스티벌 조직위원회',
-    lat: 37.5219,
-    lng: 127.1264,
-  },
+  
   {
     id: 'hackathon',
     name: '2025 HACKY TALKY',
@@ -177,6 +149,35 @@ export const events: Event[] = [
         description: '간식 및 음료 제공',
       },
     ],
+  },
+{
+    id: 'yonsei-festival',
+    name: '연세대학교 대동제',
+    time: '5월 27일 - 5월 30일, 10:00 AM - 10:00 PM',
+    location: '연세대학교 신촌캠퍼스',
+    locationDetail: '서울특별시 서대문구 연세로 50',
+    description: '연세대학교의 전통 있는 대동제! 다양한 공연, 부스, 체험 프로그램이 준비되어 있습니다.',
+    poster: '/img/2025_대동제_책자_내지-01.png',
+    going: 342,
+    tags: ['# 대동제', '# 공연', '# 부스', '# 체험'],
+    host: '연세대학교 학생회',
+    lat: 37.5640,
+    lng: 126.9369,
+    festivalMap: '/img/대동제_지도.png', // 대동제 지도 이미지
+  },
+  {
+    id: 'rock-festival',
+    name: '2025 락페스티벌',
+    time: '7월 4일 - 7월 26일, 2:00 PM - 11:00 PM',
+    location: '국립극장 달오름, 하늘',
+    locationDetail: '서울특별시 중구 장충단로 59',
+    description: '국내 최고의 락 페스티벌! 최고의 밴드들과 함께하는 뜨거운 여름밤을 경험하세요.',
+    poster: '/img/2025_락페스티벌.jpg',
+    going: 1250,
+    tags: ['# 락페스티벌', '# 음악', '# 공연', '# 야외'],
+    host: '락페스티벌 조직위원회',
+    lat: 37.5219,
+    lng: 127.1264,
   },
 ]
 
