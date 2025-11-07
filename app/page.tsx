@@ -196,9 +196,12 @@ export default function Home() {
 
               {/* 액션 버튼 */}
               <div className="space-y-3">
-                <button className="w-full px-6 py-3 bg-white text-[#17161C] font-semibold rounded-md hover:bg-gray-100 transition-colors">
+                <Link
+                  href="/register/complete"
+                  className="block w-full px-6 py-3 bg-white text-[#17161C] font-semibold rounded-md hover:bg-gray-100 transition-colors text-center"
+                >
                   참가 신청하기
-                </button>
+                </Link>
                 <div className="flex gap-4 text-sm">
                   <button className="text-gray-400 hover:text-white transition-colors">
                     호스트에게 문의
