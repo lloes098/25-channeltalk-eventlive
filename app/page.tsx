@@ -221,6 +221,211 @@ export default function Home() {
             </div>
           </div>
         </div>
+
+        {/* 빠른 메뉴 섹션 */}
+        <section className="mt-12 lg:mt-16">
+          <h2 className="text-2xl font-bold text-white mb-6">빠른 메뉴</h2>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <Link
+              href="/notices"
+              className="group bg-[#1F1E24] border border-[#2A2930] rounded-lg p-6 hover:border-[#C2FE0F]/50 transition-all hover:bg-[#2A2930]"
+            >
+              <div className="w-12 h-12 rounded-lg bg-blue-500/20 flex items-center justify-center mb-4 group-hover:bg-blue-500/30 transition-colors">
+                <svg
+                  className="w-6 h-6 text-blue-400"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                  />
+                </svg>
+              </div>
+              <h3 className="text-lg font-semibold text-white mb-1">공지사항</h3>
+              <p className="text-sm text-gray-400">최신 행사 소식</p>
+            </Link>
+
+            <Link
+              href="/booths"
+              className="group bg-[#1F1E24] border border-[#2A2930] rounded-lg p-6 hover:border-[#C2FE0F]/50 transition-all hover:bg-[#2A2930]"
+            >
+              <div className="w-12 h-12 rounded-lg bg-[#C2FE0F]/20 flex items-center justify-center mb-4 group-hover:bg-[#C2FE0F]/30 transition-colors">
+                <svg
+                  className="w-6 h-6 text-[#C2FE0F]"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
+                  />
+                </svg>
+              </div>
+              <h3 className="text-lg font-semibold text-white mb-1">부스 안내</h3>
+              <p className="text-sm text-gray-400">음식·체험·홍보</p>
+            </Link>
+
+            <Link
+              href="/performances"
+              className="group bg-[#1F1E24] border border-[#2A2930] rounded-lg p-6 hover:border-[#C2FE0F]/50 transition-all hover:bg-[#2A2930]"
+            >
+              <div className="w-12 h-12 rounded-lg bg-purple-500/20 flex items-center justify-center mb-4 group-hover:bg-purple-500/30 transition-colors">
+                <svg
+                  className="w-6 h-6 text-purple-400"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"
+                  />
+                </svg>
+              </div>
+              <h3 className="text-lg font-semibold text-white mb-1">공연 일정</h3>
+              <p className="text-sm text-gray-400">타임테이블 확인</p>
+            </Link>
+
+            <Link
+              href="/facilities"
+              className="group bg-[#1F1E24] border border-[#2A2930] rounded-lg p-6 hover:border-[#C2FE0F]/50 transition-all hover:bg-[#2A2930]"
+            >
+              <div className="w-12 h-12 rounded-lg bg-orange-500/20 flex items-center justify-center mb-4 group-hover:bg-orange-500/30 transition-colors">
+                <svg
+                  className="w-6 h-6 text-orange-400"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                  />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+                  />
+                </svg>
+              </div>
+              <h3 className="text-lg font-semibold text-white mb-1">시설 위치</h3>
+              <p className="text-sm text-gray-400">화장실·흡연장 등</p>
+            </Link>
+          </div>
+        </section>
+
+        {/* 주요 시설 안내 섹션 */}
+        <section className="mt-12 lg:mt-16">
+          <h2 className="text-2xl font-bold text-white mb-6">주요 시설 안내</h2>
+          <div className="bg-[#1F1E24] border border-[#2A2930] rounded-lg p-8 lg:p-12">
+            <div className="relative w-full max-w-2xl mx-auto aspect-square">
+              {/* 중앙 캠퍼스 행사장 아이콘 */}
+              <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                <div className="w-24 h-24 lg:w-32 lg:h-32 rounded-full bg-[#C2FE0F] flex items-center justify-center shadow-lg shadow-[#C2FE0F]/20">
+                  <svg
+                    className="w-12 h-12 lg:w-16 lg:h-16 text-[#17161C]"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
+                    />
+                  </svg>
+                </div>
+                <div className="mt-4 text-center">
+                  <p className="text-white font-semibold text-sm lg:text-base">캠퍼스 행사장</p>
+                </div>
+              </div>
+
+              {/* 주변 시설 아이콘들 */}
+              {/* 상단 왼쪽 - 갤러리/사진 */}
+              <div className="absolute top-8 left-8 lg:top-12 lg:left-12">
+                <div className="w-14 h-14 lg:w-16 lg:h-16 rounded-full bg-blue-500 flex items-center justify-center shadow-lg cursor-pointer hover:scale-110 transition-transform">
+                  <svg
+                    className="w-7 h-7 lg:w-8 lg:h-8 text-white"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
+                    />
+                  </svg>
+                </div>
+              </div>
+
+              {/* 상단 오른쪽 - 정보 */}
+              <div className="absolute top-8 right-8 lg:top-12 lg:right-12">
+                <div className="w-14 h-14 lg:w-16 lg:h-16 rounded-full bg-purple-500 flex items-center justify-center shadow-lg cursor-pointer hover:scale-110 transition-transform">
+                  <span className="text-white text-xl lg:text-2xl font-bold">i</span>
+                </div>
+              </div>
+
+              {/* 하단 왼쪽 - Wi-Fi */}
+              <div className="absolute bottom-8 left-8 lg:bottom-12 lg:left-12">
+                <div className="w-14 h-14 lg:w-16 lg:h-16 rounded-full bg-yellow-500 flex items-center justify-center shadow-lg cursor-pointer hover:scale-110 transition-transform">
+                  <svg
+                    className="w-7 h-7 lg:w-8 lg:h-8 text-white"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M8.111 16.404a5.5 5.5 0 017.778 0M12 20h.01M15 13a3 3 0 11-6 0 3 3 0 016 0zm-8-5a5.5 5.5 0 017.778 0M5 10.277a7.5 7.5 0 0114.001 0"
+                    />
+                  </svg>
+                </div>
+              </div>
+
+              {/* 하단 오른쪽 - 위치 핀 */}
+              <div className="absolute bottom-8 right-8 lg:bottom-12 lg:right-12">
+                <div className="w-14 h-14 lg:w-16 lg:h-16 rounded-full bg-blue-500 flex items-center justify-center shadow-lg cursor-pointer hover:scale-110 transition-transform">
+                  <svg
+                    className="w-7 h-7 lg:w-8 lg:h-8 text-white"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                    />
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
       </div>
     </main>
   )
