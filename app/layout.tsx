@@ -2,7 +2,6 @@ import type { Metadata } from 'next'
 import './globals.css'
 import Header from '@/components/Header'
 import ChannelTalk from '@/components/ChannelTalk'
-import Script from 'next/script'
 
 export const metadata: Metadata = {
   title: 'EventLive',
@@ -19,10 +18,6 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <head>
-        <Script
-          src="https://cdn.channel.io/plugin/ch-plugin-web-loader.js"
-          strategy="afterInteractive"
-        />
       </head>
       <body>
         <Header />
