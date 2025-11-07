@@ -1,0 +1,17 @@
+{
+  "name": "EVENTOK - 실시간 행사 관리 플랫폼",
+  "short_name": "EVENTOK",
+  "description": "ChannelTalk과 연동된 실시간 축제/행사 관리 플랫폼",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#17161C",
+  "theme_color": "#C2FE0F",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}
+
